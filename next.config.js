@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // This enables static HTML export
-  basePath: "/Memory-Charts", // Your repo name
+  output: "export",
+  basePath: "/Memory-Charts",
   images: {
     unoptimized: true,
   },
