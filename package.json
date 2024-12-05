@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "rm -rf .next out && next build && npx tailwindcss -o out/build.css --minify",
+    "predeploy": "yarn build && touch out/.nojekyll && mkdir -p out/Memory-Charts && cp out/build.css out/Memory-Charts/",
+    "deploy": "gh-pages -d out -t true",
     "start": "next start",
-    "lint": "next lint",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d .next"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",

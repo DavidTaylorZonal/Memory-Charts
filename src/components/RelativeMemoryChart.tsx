@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import MemoryChangeChart from "./BreakDown";
 
 interface DataPoint {
   iteration: number;
@@ -26,16 +27,17 @@ export const RelativeMemoryChart: React.FC = () => {
   };
 
   const cashPaymentWrapper = calculateRelativeChanges([
-    0, 31, 0, -7, 0, -9, 16, -7, -4, -7, 19, -8, -7, -2, 1, 5, -4, 4, -4, 4, -1,
-    4, 0, 1, -1, -4, 3, 3, -3, -2, 8, -4, 10, -6, 2, -2, -8, -10, 21, -2, 3, -4,
-    2, -7, 3, 5, 1, -2, -3, 5,
+    0, 13, 9, 1, -1, 0, -4, 4, 2, -1, -1, 2, 2, -1, 6, 1, -3, 3, 1, -7, 5, 1, 4,
+    6, -5, 1, 0, -2, 5, 0, -2, 2, 4, 4, -3, 6, -1, -4, -2, 13, -4, -4, 10, -4,
+    0, 6, -3, 0, -8, 14,
   ]);
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg flex flex-col">
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
-        Memory Change Analysis (Relative to Baseline)
+        Dojo release 2.1.0 Prod version
       </h2>
+      <p>Taking 50 card payments</p>
       <div className="h-96">
         <LineChart width={800} height={400} className="mt-4">
           <CartesianGrid strokeDasharray="3 3" />
@@ -56,62 +58,18 @@ export const RelativeMemoryChart: React.FC = () => {
           />
           <Tooltip />
           <Legend />
-          {/* <Line
-            data={reduxPersistChanges}
-            type="monotone"
-            dataKey="change"
-            stroke="#8884d8"
-            name="Redux Persist"
-            strokeWidth={2}
-          /> */}
-          {/* <Line
-            data={middlewareChanges}
-            type="monotone"
-            dataKey="change"
-            stroke="#82ca9d"
-            name="Middleware"
-            strokeWidth={2}
-          /> */}
           <Line
             data={cashPaymentWrapper}
             type="monotone"
             dataKey="change"
             stroke="#82ca9d"
-            name="Middleware"
+            name=""
             strokeWidth={2}
           />
         </LineChart>
       </div>
-      {/* <div className="mt-4">
-        <h3 className="text-lg font-semibold text-gray-700">Analysis:</h3>
-        <ul className="list-disc ml-6 mt-2 text-gray-600">
-          <li>
-            Middleware Solution:
-            <ul className="ml-4 list-disc">
-              <li>Average Memory Change: +7.15MB</li>
-              <li>Maximum Spike: +25MB</li>
-              <li>More consistent memory pattern</li>
-            </ul>
-          </li>
-          <li>
-            Redux Persist:
-            <ul className="ml-4 list-disc">
-              <li>Average Memory Change: +16.8MB</li>
-              <li>Maximum Spike: +29MB</li>
-              <li>Shows more volatility in memory usage</li>
-            </ul>
-          </li>
-          <li>
-            Recommendation: The Middleware solution appears to be the better
-            choice because:
-            <ul className="ml-4 list-disc">
-              <li>Lower average memory overhead</li>
-              <li>More predictable memory pattern</li>
-              <li>Fewer extreme spikes and drops</li>
-            </ul>
-          </li>
-        </ul>
-      </div> */}
+
+      <MemoryChangeChart />
     </div>
   );
 };
