@@ -46,9 +46,10 @@ export const RelativeMemoryChart: React.FC = () => {
       <div className="space-y-4 text-gray-700">
         <p>
           We are currently utilising Dojo for testing while awaiting
-          FreedomPay's resolution of the CastleChannel memory issue in their
-          SDK. Based on this situation, we determined it would be beneficial to
-          demonstrate the memory improvements achieved through Dojo payments.
+          FreedomPay&apos;s resolution of the CastleChannel memory issue in
+          their SDK. Based on this situation, we determined it would be
+          beneficial to demonstrate the memory improvements achieved through
+          Dojo payments.
         </p>
 
         <p>
