@@ -25,7 +25,7 @@ interface CustomTooltipProps {
 }
 
 const MemoryChangeChart = () => {
-  const memoryChanges = [
+  const memoryChangesCV = [
     {
       name: "Total Memory",
       start: 234,
@@ -64,6 +64,45 @@ const MemoryChangeChart = () => {
     },
   ].sort((a, b) => b.change - a.start);
 
+  //   Java Heap:    11556 KB -> 11.29 MB | 45056 KB -> 44.00 MB
+  // Native Heap:  98536 KB -> 96.23 MB | 101340 KB -> 98.96 MB
+  // Code:         61156 KB -> 59.72 MB | 178756 KB -> 174.57 MB
+  // Stack:        2152 KB -> 2.10 MB | 2172 KB -> 2.12 MB
+  // Graphics:     26774 KB -> 26.15 MB | 26774 KB -> 26.15 MB
+
+  const memoryChangesNV = [
+    {
+      name: "Total Memory",
+      start: 266,
+      end: 319,
+      change: 319 - 266,
+    },
+    {
+      name: "Java Heap",
+      start: 11,
+      end: 44,
+      change: 44 - 11,
+    },
+    {
+      name: "Native Heap",
+      start: 96,
+      end: 98,
+      change: 98 - 96,
+    },
+    {
+      name: "Code",
+      start: 59,
+      end: 174,
+      change: 174 - 59,
+    },
+    {
+      name: "Graphics",
+      start: 26,
+      end: 26,
+      change: 0,
+    },
+  ].sort((a, b) => b.change - a.start);
+
   const CustomTooltip: React.FC<CustomTooltipProps> = ({ active, payload }) => {
     if (active && payload && payload.length) {
       const data = payload[0].payload;
@@ -85,29 +124,29 @@ const MemoryChangeChart = () => {
   return (
     <div className="w-full p-4">
       <h3 className="text-xl font-semibold mb-6">
-        Memory Changes Analysis (MB)
+        Memory Changes Analysis (MB) - Current release version
       </h3>
       <div className="h-96 w-full">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={memoryChanges} layout="vertical">
+          <BarChart data={memoryChangesCV} layout="vertical">
             <XAxis
               type="number"
               domain={[
                 0,
                 Math.max(
-                  ...memoryChanges.map((d) => Math.max(d.start, d.end))
+                  ...memoryChangesCV.map((d) => Math.max(d.start, d.end))
                 ) + 10,
               ]}
             />
             <YAxis dataKey="name" type="category" width={100} />
             <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="start" stackId="a" fill="#94a3b8">
-              {memoryChanges.map((entry, index) => (
+              {memoryChangesCV.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill="#94a3b8" />
               ))}
             </Bar>
             <Bar dataKey="change" stackId="a">
-              {memoryChanges.map((entry, index) => (
+              {memoryChangesCV.map((entry, index) => (
                 <Cell
                   key={`cell-${index}`}
                   fill={entry.change > 0 ? "#ef4444" : "#22c55e"}
@@ -117,55 +156,119 @@ const MemoryChangeChart = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-4 flex gap-4 justify-end">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-[#94a3b8]"></div>
-          <span>Initial Memory</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-[#ef4444]"></div>
-          <span>Memory Increase</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-[#22c55e]"></div>
-          <span>Memory Decrease</span>
+      <h3 className="text-xl font-semibold mb-6">
+        Memory Changes Analysis (MB) - New version
+      </h3>
+      <div className="h-96 w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={memoryChangesNV} layout="vertical">
+            <XAxis
+              type="number"
+              domain={[
+                0,
+                Math.max(
+                  ...memoryChangesNV.map((d) => Math.max(d.start, d.end))
+                ) + 10,
+              ]}
+            />
+            <YAxis dataKey="name" type="category" width={100} />
+            <Tooltip content={<CustomTooltip />} />
+            <Bar dataKey="start" stackId="a" fill="#94a3b8">
+              {memoryChangesNV.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill="#94a3b8" />
+              ))}
+            </Bar>
+            <Bar dataKey="change" stackId="a">
+              {memoryChangesNV.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={entry.change > 0 ? "#ef4444" : "#22c55e"}
+                />
+              ))}
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="mt-8 bg-gray-50 p-6 rounded-lg">
+        <h3 className="text-lg font-semibold text-gray-700 mb-4">
+          Memory Analysis Comparison
+        </h3>
+        <div className="space-y-6 text-gray-600">
+          <div>
+            <h4 className="font-medium mb-2">Memory Pattern Analysis:</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                Old Version: Shows erratic memory recovery with concerning
+                upward trend
+              </li>
+              <li>
+                New Version: Demonstrates better memory recovery after spikes,
+                maintaining stable baseline
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-2">Java Heap Management:</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Old Version: Higher usage (16,344 KB → 49,804 KB)</li>
+              <li>New Version: More efficient (11,556 KB → 45,056 KB)</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-2">
+              Key Improvements in New Version:
+            </h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>Better memory cleanup after operations</li>
+              <li>More efficient Java heap usage</li>
+              <li>No memory leak warnings</li>
+              <li>More predictable memory patterns</li>
+              <li>Better recovery after memory spikes</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-medium mb-2">Stability Comparison:</h4>
+            <ul className="list-disc pl-6 space-y-2">
+              <li>
+                Old Version: Ended with concerning 14MB increase in final
+                iteration
+              </li>
+              <li>
+                New Version: Ended with controlled -3MB decrease, showing better
+                cleanup
+              </li>
+            </ul>
+          </div>
+
+          <div className="mt-4">
+            <h4 className="font-medium mb-2">Recommendation:</h4>
+            <p className="bg-green-50 p-4 rounded border border-green-200">
+              Proceed with the new version. Despite higher initial memory usage,
+              it demonstrates more mature memory management patterns, better
+              cleanup behavior, and more stable long-term performance
+              characteristics. The absence of memory leak warnings and
+              consistent recovery patterns indicate better reliability in
+              production environments.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="mt-8 bg-gray-50 p-6 rounded-lg">
-        <h3 className="text-lg font-semibold text-gray-700 mb-4">
-          Memory Analysis Summary:
-        </h3>
-        <div className="space-y-4 text-gray-600">
-          <p>
-            Overall memory usage increased by{" "}
-            <span className="font-semibold text-red-600">53 MB</span> (234 MB →
-            287 MB)
-          </p>
-          <p>Largest increases were observed in:</p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>
-              Code section:{" "}
-              <span className="font-semibold text-red-600">+105 MB</span> (57 MB
-              → 162 MB)
-            </li>
-            <li>
-              Java Heap:{" "}
-              <span className="font-semibold text-red-600">+33 MB</span> (16 MB
-              → 49 MB)
-            </li>
-            <li>
-              Native Heap:{" "}
-              <span className="font-semibold text-red-600">+4 MB</span> (68 MB →
-              72 MB)
-            </li>
-          </ul>
-          <p>
-            The <span className="font-semibold">Code section</span> showed the
-            most significant growth, accounting for approximately 66% of the
-            total memory increase. This could indicate potential areas for
-            optimization in code loading or caching strategies.
-          </p>
+      <div className="mt-4 flex gap-4 justify-end">
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-[#94a3b8]"></div>
+          <span>Baseline Memory</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-[#82ca9d]"></div>
+          <span>Release Version</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-4 h-4 bg-[#f65ef1]"></div>
+          <span>New Version</span>
         </div>
       </div>
     </div>

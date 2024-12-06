@@ -26,10 +26,16 @@ export const RelativeMemoryChart: React.FC = () => {
     }));
   };
 
-  const cashPaymentWrapper = calculateRelativeChanges([
+  const dojoCardCV = calculateRelativeChanges([
     0, 13, 9, 1, -1, 0, -4, 4, 2, -1, -1, 2, 2, -1, 6, 1, -3, 3, 1, -7, 5, 1, 4,
     6, -5, 1, 0, -2, 5, 0, -2, 2, 4, 4, -3, 6, -1, -4, -2, 13, -4, -4, 10, -4,
     0, 6, -3, 0, -8, 14,
+  ]);
+
+  const dojoCardNV = calculateRelativeChanges([
+    0, 48, 0, -9, -5, -6, -3, 8, -3, 1, 1, -2, -6, 6, 1, 0, 1, 0, 1, -1, 2, 3,
+    5, 2, -4, 0, 4, -1, 2, -1, -2, 4, 2, 0, 3, -1, 0, 8, -6, 5, 1, 2, -5, 8, -2,
+    -4, 6, -2, 3, -3,
   ]);
 
   return (
@@ -37,8 +43,20 @@ export const RelativeMemoryChart: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4 text-gray-800">
         Dojo release 2.1.0 Prod version
       </h2>
-      <p>Taking 50 card payments</p>
-      <div className="h-96">
+      <div className="space-y-4 text-gray-700">
+        <p>
+          We are currently utilising Dojo for testing while awaiting
+          FreedomPay's resolution of the CastleChannel memory issue in their
+          SDK. Based on this situation, we determined it would be beneficial to
+          demonstrate the memory improvements achieved through Dojo payments.
+        </p>
+
+        <p>
+          Test scenario: Conducted using a Dojo mobiGo2 device, executing 50
+          payment transactions through iServe.
+        </p>
+      </div>
+      <div className="h-96 pl-10">
         <LineChart width={800} height={400} className="mt-4">
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis
@@ -46,7 +64,6 @@ export const RelativeMemoryChart: React.FC = () => {
             type="number"
             domain={[1, 20]}
             tickCount={20}
-            label={{ value: "Iteration", position: "bottom" }}
           />
           <YAxis
             domain={[-10, 30]}
@@ -59,17 +76,26 @@ export const RelativeMemoryChart: React.FC = () => {
           <Tooltip />
           <Legend />
           <Line
-            data={cashPaymentWrapper}
+            data={dojoCardCV}
             type="monotone"
             dataKey="change"
             stroke="#82ca9d"
-            name=""
+            name="Release Version"
+            strokeWidth={2}
+          />
+          <Line
+            data={dojoCardNV}
+            type="monotone"
+            dataKey="change"
+            stroke="#f65ef1"
+            name="New Version"
             strokeWidth={2}
           />
         </LineChart>
       </div>
-
-      <MemoryChangeChart />
+      <div className="mt-10">
+        <MemoryChangeChart />
+      </div>
     </div>
   );
 };
