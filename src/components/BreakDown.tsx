@@ -25,6 +25,8 @@ interface CustomTooltipProps {
 }
 
 const MemoryChangeChart = () => {
+  const kbToMb = (kb: number) => Math.round(kb / 1024);
+
   const memoryChangesCurrentVersion = [
     {
       name: "Total Memory",
@@ -34,84 +36,84 @@ const MemoryChangeChart = () => {
     },
     {
       name: "Java Heap",
-      start: 18,
-      end: 208,
-      change: 190,
+      start: kbToMb(18208),
+      end: kbToMb(18208),
+      change: 0,
     },
     {
       name: "Native Heap",
-      start: 60,
-      end: 704,
-      change: 644,
+      start: kbToMb(60704),
+      end: kbToMb(60704),
+      change: 0,
     },
     {
       name: "Code",
-      start: 42,
-      end: 44,
-      change: 2,
+      start: kbToMb(42044),
+      end: kbToMb(42044),
+      change: 0,
     },
     {
       name: "Graphics",
-      start: 18,
-      end: 856,
-      change: 838,
+      start: kbToMb(18856),
+      end: kbToMb(18856),
+      change: 0,
     },
     {
       name: "Private Other",
-      start: 96,
-      end: 4,
-      change: -92,
+      start: kbToMb(96004),
+      end: kbToMb(96004),
+      change: 0,
     },
     {
       name: "System",
-      start: 13,
-      end: 462,
-      change: 449,
+      start: kbToMb(13462),
+      end: kbToMb(13462),
+      change: 0,
     },
   ].sort((a, b) => b.change - a.start);
 
   const newDatabase = [
     {
       name: "Total Memory",
-      start: 244,
-      end: 261,
-      change: 17,
+      start: 261,
+      end: 239,
+      change: -22,
     },
     {
       name: "Java Heap",
-      start: 18,
-      end: 208,
-      change: 190,
+      start: kbToMb(12784),
+      end: kbToMb(12784),
+      change: 0,
     },
     {
       name: "Native Heap",
-      start: 60,
-      end: 704,
-      change: 644,
+      start: kbToMb(60664),
+      end: kbToMb(60664),
+      change: 0,
     },
     {
       name: "Code",
-      start: 42,
-      end: 44,
-      change: 2,
+      start: kbToMb(41144),
+      end: kbToMb(41144),
+      change: 0,
     },
     {
       name: "Graphics",
-      start: 18,
-      end: 856,
-      change: 838,
+      start: kbToMb(23432),
+      end: kbToMb(23432),
+      change: 0,
     },
     {
       name: "Private Other",
-      start: 96,
-      end: 4,
-      change: -92,
+      start: kbToMb(92712),
+      end: kbToMb(92712),
+      change: 0,
     },
     {
       name: "System",
-      start: 13,
-      end: 462,
-      change: 449,
+      start: kbToMb(12852),
+      end: kbToMb(12852),
+      change: 0,
     },
   ].sort((a, b) => b.change - a.start);
 
