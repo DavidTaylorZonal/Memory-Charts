@@ -17,30 +17,43 @@ import {
 const MemoryVisualizationOptions = () => {
   const [activeTab, setActiveTab] = useState("absolute");
 
-  const oldArch = [
-    { iteration: 5, memory: 231, change: 23, absoluteMemory: 231 },
-    { iteration: 10, memory: 220, change: 12, absoluteMemory: 220 },
-    { iteration: 15, memory: 231, change: 23, absoluteMemory: 231 },
-    { iteration: 20, memory: 229, change: 21, absoluteMemory: 229 },
-    { iteration: 25, memory: 232, change: 24, absoluteMemory: 232 },
-    { iteration: 30, memory: 241, change: 33, absoluteMemory: 241 },
-    { iteration: 35, memory: 236, change: 28, absoluteMemory: 236 },
-    { iteration: 40, memory: 251, change: 43, absoluteMemory: 251 },
-    { iteration: 45, memory: 257, change: 49, absoluteMemory: 257 },
-    { iteration: 50, memory: 255, change: 47, absoluteMemory: 255 },
+  const updatedOldArch = [
+    { iteration: 5, memory: 218 },
+    { iteration: 10, memory: 219 },
+    { iteration: 15, memory: 215 },
+    { iteration: 20, memory: 220 },
+    { iteration: 25, memory: 235 },
+    { iteration: 30, memory: 240 },
+    { iteration: 35, memory: 236 },
+    { iteration: 40, memory: 251 },
+    { iteration: 45, memory: 260 },
+    { iteration: 50, memory: 263 },
   ];
 
-  const newDatabase = [
-    { iteration: 5, memory: 231, change: -30, absoluteMemory: 214 },
-    { iteration: 10, memory: 231, change: -30, absoluteMemory: 214 },
-    { iteration: 15, memory: 238, change: -23, absoluteMemory: 221 },
-    { iteration: 20, memory: 216, change: -45, absoluteMemory: 199 },
-    { iteration: 25, memory: 240, change: -21, absoluteMemory: 223 },
-    { iteration: 30, memory: 245, change: -16, absoluteMemory: 228 },
-    { iteration: 35, memory: 249, change: -12, absoluteMemory: 232 },
-    { iteration: 40, memory: 252, change: -9, absoluteMemory: 235 },
-    { iteration: 45, memory: 255, change: -6, absoluteMemory: 238 },
-    { iteration: 50, memory: 261, change: 0, absoluteMemory: 244 },
+  const updatedNewDatabase = [
+    { iteration: 5, memory: 235 },
+    { iteration: 10, memory: 233 },
+    { iteration: 15, memory: 233 },
+    { iteration: 20, memory: 242 },
+    { iteration: 25, memory: 242 },
+    { iteration: 30, memory: 244 },
+    { iteration: 35, memory: 249 },
+    { iteration: 40, memory: 257 },
+    { iteration: 45, memory: 258 },
+    { iteration: 50, memory: 263 },
+  ];
+
+  const opSqliteNewArch = [
+    { iteration: 5, memory: 233 },
+    { iteration: 10, memory: 234 },
+    { iteration: 15, memory: 241 },
+    { iteration: 20, memory: 244 },
+    { iteration: 25, memory: 250 },
+    { iteration: 30, memory: 252 },
+    { iteration: 35, memory: 283 },
+    { iteration: 40, memory: 260 },
+    { iteration: 45, memory: 296 },
+    { iteration: 50, memory: 265 },
   ];
 
   return (
@@ -121,20 +134,29 @@ const MemoryVisualizationOptions = () => {
                 label="Initial Memory (208MB)"
               />
               <Line
-                data={oldArch}
+                data={updatedOldArch}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
                 stroke="#2563eb"
                 name="Legacy Architecture"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />
               <Line
-                data={newDatabase}
+                data={updatedNewDatabase}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
                 stroke="#dc2626"
                 name="New Architecture"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+              <Line
+                data={opSqliteNewArch}
+                type="monotone"
+                dataKey="memory"
+                stroke="#059669"
+                name="OpSQLite Architecture"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />
@@ -178,38 +200,56 @@ const MemoryVisualizationOptions = () => {
                 label="Initial Memory (208MB)"
               />
               <Area
-                data={oldArch}
+                data={updatedOldArch}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
                 fill="#2563eb"
                 fillOpacity={0.1}
                 stroke="none"
                 name="Legacy Growth Area"
               />
               <Area
-                data={newDatabase}
+                data={updatedNewDatabase}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
                 fill="#dc2626"
                 fillOpacity={0.1}
                 stroke="none"
                 name="New Growth Area"
               />
-              <Line
-                data={oldArch}
+              <Area
+                data={opSqliteNewArch}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
+                fill="#059669"
+                fillOpacity={0.1}
+                stroke="none"
+                name="OpSQLite Growth Area"
+              />
+              <Line
+                data={updatedOldArch}
+                type="monotone"
+                dataKey="memory"
                 stroke="#2563eb"
                 name="Legacy Architecture"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />
               <Line
-                data={newDatabase}
+                data={updatedNewDatabase}
                 type="monotone"
-                dataKey="absoluteMemory"
+                dataKey="memory"
                 stroke="#dc2626"
                 name="New Architecture"
+                strokeWidth={2}
+                dot={{ r: 4 }}
+              />
+              <Line
+                data={opSqliteNewArch}
+                type="monotone"
+                dataKey="memory"
+                stroke="#059669"
+                name="OpSQLite Architecture"
                 strokeWidth={2}
                 dot={{ r: 4 }}
               />
@@ -228,10 +268,11 @@ const MemoryVisualizationOptions = () => {
               width={800}
               height={400}
               margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
-              data={oldArch.map((item, index) => ({
+              data={updatedOldArch.map((item, index) => ({
                 iteration: item.iteration,
-                legacy: item.absoluteMemory,
-                new: newDatabase[index].absoluteMemory,
+                legacy: item.memory,
+                new: updatedNewDatabase[index].memory,
+                opsqlite: opSqliteNewArch[index].memory,
               }))}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
@@ -267,6 +308,12 @@ const MemoryVisualizationOptions = () => {
                 dataKey="new"
                 fill="#dc2626"
                 name="New Architecture"
+                barSize={20}
+              />
+              <Bar
+                dataKey="opsqlite"
+                fill="#059669"
+                name="OpSQLite Architecture"
                 barSize={20}
               />
             </BarChart>

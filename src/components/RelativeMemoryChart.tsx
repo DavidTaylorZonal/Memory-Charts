@@ -3,10 +3,19 @@
 import React from "react";
 
 import MemoryVisualizationOptions from "./MemoryVisualizationOptions";
+import { useRouter } from "next/navigation";
 
 export const RelativeMemoryChart: React.FC = () => {
+  const router = useRouter();
+
   return (
     <div className="w-full space-y-8">
+      <button
+        onClick={() => router.push("/features")}
+        className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+      >
+        Features Remaining
+      </button>
       <div className="p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-gray-800">
           Memory Usage Analysis
