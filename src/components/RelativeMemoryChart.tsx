@@ -56,7 +56,7 @@ export const RelativeMemoryChart: React.FC = () => {
                 Net Change: +3MB increase
               </li>
               <li>Demonstrates stable behavior</li>
-              <li>Handles Zonal's large datasets</li>
+              <li>Handles Zonal&apos;s large datasets</li>
             </ul>
           </div>
         </div>
