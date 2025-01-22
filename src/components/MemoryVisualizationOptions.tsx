@@ -4,13 +4,11 @@ import {
   Line,
   BarChart,
   Bar,
-  ComposedChart,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  Area,
   ReferenceLine,
 } from "recharts";
 
@@ -44,16 +42,16 @@ const MemoryVisualizationOptions = () => {
   ];
 
   const opSqliteNewArch = [
-    { iteration: 5, memory: 233 },
-    { iteration: 10, memory: 234 },
-    { iteration: 15, memory: 241 },
-    { iteration: 20, memory: 244 },
-    { iteration: 25, memory: 250 },
-    { iteration: 30, memory: 252 },
-    { iteration: 35, memory: 283 },
-    { iteration: 40, memory: 260 },
-    { iteration: 45, memory: 296 },
-    { iteration: 50, memory: 265 },
+    { iteration: 5, memory: 254 },
+    { iteration: 10, memory: 252 },
+    { iteration: 15, memory: 235 },
+    { iteration: 20, memory: 241 },
+    { iteration: 25, memory: 246 },
+    { iteration: 30, memory: 250 },
+    { iteration: 35, memory: 263 },
+    { iteration: 40, memory: 276 },
+    { iteration: 45, memory: 265 },
+    { iteration: 50, memory: 257 },
   ];
 
   return (
@@ -68,16 +66,6 @@ const MemoryVisualizationOptions = () => {
           onClick={() => setActiveTab("absolute")}
         >
           Absolute Memory
-        </button>
-        <button
-          className={`px-4 py-2 rounded-lg ${
-            activeTab === "composed"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700"
-          }`}
-          onClick={() => setActiveTab("composed")}
-        >
-          Combined View
         </button>
         <button
           className={`px-4 py-2 rounded-lg ${
@@ -161,99 +149,6 @@ const MemoryVisualizationOptions = () => {
                 dot={{ r: 4 }}
               />
             </LineChart>
-          </div>
-        </div>
-      )}
-
-      {activeTab === "composed" && (
-        <div className="p-6 bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold mb-4 text-gray-800">
-            Memory Usage with Growth Area
-          </h2>
-          <div className="h-96">
-            <ComposedChart
-              width={800}
-              height={400}
-              margin={{ top: 20, right: 30, left: 20, bottom: 10 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-              <XAxis
-                dataKey="iteration"
-                type="number"
-                domain={[0, 50]}
-                tickCount={11}
-              />
-              <YAxis
-                domain={[180, 280]}
-                label={{
-                  value: "Memory (MB)",
-                  angle: -90,
-                  position: "insideLeft",
-                }}
-              />
-              <Tooltip />
-              <Legend verticalAlign="top" height={36} />
-              <ReferenceLine
-                y={208}
-                stroke="#666"
-                strokeDasharray="3 3"
-                label="Initial Memory (208MB)"
-              />
-              <Area
-                data={updatedOldArch}
-                type="monotone"
-                dataKey="memory"
-                fill="#2563eb"
-                fillOpacity={0.1}
-                stroke="none"
-                name="Legacy Growth Area"
-              />
-              <Area
-                data={updatedNewDatabase}
-                type="monotone"
-                dataKey="memory"
-                fill="#dc2626"
-                fillOpacity={0.1}
-                stroke="none"
-                name="New Growth Area"
-              />
-              <Area
-                data={opSqliteNewArch}
-                type="monotone"
-                dataKey="memory"
-                fill="#059669"
-                fillOpacity={0.1}
-                stroke="none"
-                name="OpSQLite Growth Area"
-              />
-              <Line
-                data={updatedOldArch}
-                type="monotone"
-                dataKey="memory"
-                stroke="#2563eb"
-                name="Legacy Architecture"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-              />
-              <Line
-                data={updatedNewDatabase}
-                type="monotone"
-                dataKey="memory"
-                stroke="#dc2626"
-                name="New Architecture"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-              />
-              <Line
-                data={opSqliteNewArch}
-                type="monotone"
-                dataKey="memory"
-                stroke="#059669"
-                name="OpSQLite Architecture"
-                strokeWidth={2}
-                dot={{ r: 4 }}
-              />
-            </ComposedChart>
           </div>
         </div>
       )}

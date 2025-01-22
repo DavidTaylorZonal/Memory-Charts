@@ -27,57 +27,57 @@ export const RelativeMemoryChart: React.FC = () => {
       </div>
 
       <div className="p-6 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">Key Findings</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-800">
+          Memory Leak Resolution ⚡
+        </h2>
 
         <div className="grid grid-cols-2 gap-8 mb-6">
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-blue-600">
-              Current Architecture
+              Old System (iServe)
             </h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Initial Memory: 208MB → Final: 263MB</li>
+              <li>Initial Memory: 218MB → Final: 263MB</li>
               <li className="text-red-600 font-medium">
-                Net Change: +55MB increase
+                Net Change: +45MB increase
               </li>
-              <li>Shows consistent upward trend</li>
-              <li>Requires storage clearing to manage memory</li>
+              <li>Shows unstable memory growth</li>
+              <li>Struggles with large datasets</li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-red-600">
-              New Architecture (OP-SQLite)
+            <h3 className="text-xl font-semibold text-green-600">
+              New System (OP-SQLite)
             </h3>
             <ul className="list-disc pl-5 space-y-2">
-              <li>Initial Memory: 244MB → Final: 261MB</li>
+              <li>Initial Memory: 254MB → Final: 257MB</li>
               <li className="text-green-600 font-medium">
-                Net Change: +17MB increase (with Redux Persist still present)
+                Net Change: +3MB increase
               </li>
-              <li>Demonstrates more stable behavior</li>
-              <li>Shows potential for significant improvement</li>
+              <li>Demonstrates stable behavior</li>
+              <li>Handles Zonal's large datasets</li>
             </ul>
           </div>
         </div>
 
         <div className="bg-gray-50 p-4 rounded-lg space-y-4">
-          <h3 className="text-lg font-semibold mb-2">Bottom Line</h3>
+          <h3 className="text-lg font-semibold mb-2">Current Status</h3>
           <p className="text-gray-700">
-            This Proof of Concept demonstrates that the new OP-SQLite
-            architecture provides improved memory management even while running
-            alongside Redux Persist. The current system shows concerning memory
-            growth of +55MB, while the new architecture limits this to only
-            +17MB under the same conditions.
+            Migration to OP-SQLite has successfully stabilized memory usage.
+            Testing confirms significantly improved performance with only 3MB
+            growth vs previous 45MB growth over 50 transactions.
           </p>
 
           <div className="bg-blue-50 p-4 rounded-lg">
             <h4 className="text-md font-semibold text-blue-800">
-              Future Improvement Potential
+              Remaining Challenge
             </h4>
             <p className="text-blue-900">
-              Once Redux Persist is fully removed, we expect to eliminate the
-              remaining 17MB memory increase entirely. This POC suggests that a
-              complete migration to OP-SQLite will provide optimal memory
-              management and eliminate the need for manual storage clearing.
+              ZCF polling continues to impact memory. Working with Product Owner
+              on two potential solutions: 1) Remove polling while maintaining
+              UX, or 2) Implement socket notifications for theme updates, MOA
+              terminal status, and ZCF availability.
             </p>
           </div>
         </div>
